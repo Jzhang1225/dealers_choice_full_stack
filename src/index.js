@@ -4,6 +4,8 @@ import { connect, Provider } from 'react-redux';
 import store, { loadTrainer, loadPokemon } from './store'
 import Nav from './Nav'
 import { HashRouter, Route } from 'react-router-dom'
+import Trainers from './Trainers'
+import Pokemons from './Pokemons';
 
 class _App extends Component {
     async componentDidMount(){
@@ -17,25 +19,10 @@ class _App extends Component {
         console.log(trainers, pokemons)
         return (
             <div>
+                <h1>Pokemon trainers and their pals</h1>
                 <Nav />
-                <div>
-                    {trainers.map(trainer =>{
-                        return(
-                            <div key = {trainer.id}>
-                                {trainer.name}
-                            </div>
-                        )
-                    })}
-                </div>
-                <div>
-                {pokemons.map(pokemon =>{
-                    return(
-                        <div key = {pokemon.id}>
-                            {pokemon.name}
-                        </div>
-                    )
-                })}
-            </div>
+                <Trainers />
+                <Pokemons />
             </div>
         )
     }
