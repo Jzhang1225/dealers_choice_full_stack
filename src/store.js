@@ -7,7 +7,7 @@ const LOAD_POKEMON = 'LOAD_POKEMON';
 
 const pokemonReducer = ( state = [], action) =>{
     if (action.type === LOAD_POKEMON){
-        state = action.pokemon
+        state = action.pokemons
     };
     return state
 }
@@ -33,8 +33,19 @@ const loadTrainer =()=>{
     }
 };
 
+const loadPokemon =()=>{
+    return async (dispatch) =>{
+        const pokemons = (await axios.get('/api/pokemons')).data
+        dispatch({
+            type: LOAD_POKEMON,
+            pokemons
+        })
+    }
+};
+
 const store = createStore(Reducer, applyMiddleware(thunk))
 export default store;
 export {
     loadTrainer,
+    loadPokemon
 }
