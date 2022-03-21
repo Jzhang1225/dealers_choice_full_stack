@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 const Pokemons = ({ pokemons }) => {
     return (
         <div>
+            <h2>List of all Pokemon currently available</h2>
             {pokemons.map(pokemon =>{
                 return(
                     <div key = {pokemon.id}>

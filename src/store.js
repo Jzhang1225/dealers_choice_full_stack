@@ -4,6 +4,7 @@ import axios from 'axios'
 
 const LOAD_TRAINERS = 'LOAD_TRAINERS';
 const LOAD_POKEMON = 'LOAD_POKEMON';
+const DESTROY_TRAINER = 'DESTROY_TRAINER';
 
 const pokemonReducer = ( state = [], action) =>{
     if (action.type === LOAD_POKEMON){
@@ -13,7 +14,10 @@ const pokemonReducer = ( state = [], action) =>{
 }
 const trainerReducer = ( state = [], action ) =>{
     if (action.type === LOAD_TRAINERS){
-        state = action.trainers
+        return action.trainers
+    };
+    if (action.type === DESTROY_TRAINER){
+        return state.filter(trainer => trainer.id !== action.trainer.id)
     };
     return state
 }
@@ -23,7 +27,7 @@ const Reducer = combineReducers({
     pokemons: pokemonReducer,
 })
 
-const loadTrainer =()=>{
+const loadTrainers =()=>{
     return async (dispatch) =>{
         const trainers = (await axios.get('/api/trainers')).data
         dispatch({
@@ -33,7 +37,17 @@ const loadTrainer =()=>{
     }
 };
 
-const loadPokemon =()=>{
+const destroyTrainer =(trainerId)=>{
+    return async (dispatch) =>{
+        const trainer = (await axios.delete(`/api/trainers/${trainerId}`)).data
+        dispatch({
+            type: DESTROY_TRAINER,
+            trainer
+        })
+    }
+};
+
+const loadPokemons =()=>{
     return async (dispatch) =>{
         const pokemons = (await axios.get('/api/pokemons')).data
         dispatch({
@@ -46,6 +60,7 @@ const loadPokemon =()=>{
 const store = createStore(Reducer, applyMiddleware(thunk))
 export default store;
 export {
-    loadTrainer,
-    loadPokemon
+    loadTrainers,
+    loadPokemons,
+    destroyTrainer
 }

@@ -1,28 +1,30 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { connect, Provider } from 'react-redux';
-import store, { loadTrainer, loadPokemon } from './store'
+import store, { loadTrainers, loadPokemons } from './store'
 import Nav from './Nav'
-import { HashRouter, Route } from 'react-router-dom'
-import Trainers from './Trainers'
+import { HashRouter, Route, Switch } from 'react-router-dom'
+import Trainers from './Trainers';
 import Pokemons from './Pokemons';
+import Trainer from './Trainer';
 
 class _App extends Component {
-    async componentDidMount(){
-        const { loadTrainer, loadPokemon } = this.props
-        loadTrainer();
-        loadPokemon();
+    componentDidMount(){
+        const { loadTrainers, loadPokemons } = this.props
+        loadTrainers();
+        loadPokemons();
     }
 
     render(){
-        const { trainers, pokemons } = this.props
-        console.log(trainers, pokemons)
         return (
             <div>
                 <h1>Pokemon trainers and their pals</h1>
                 <Nav />
-                <Trainers />
-                <Pokemons />
+                <Switch>
+                    <Route exact path= '/' component= { Trainers }/>
+                    <Route exact path= '/trainers/:id' component= { Trainer }/>
+                    <Route exact path= '/pokemons' component = { Pokemons } />
+                </Switch>
             </div>
         )
     }
@@ -30,11 +32,11 @@ class _App extends Component {
 
 const mapDispatchToProps = (dispatch) =>{
     return {
-        loadTrainer: ()=>{
-            dispatch(loadTrainer())
+        loadTrainers: ()=>{
+            dispatch(loadTrainers())
         },
-        loadPokemon: ()=>{
-            dispatch(loadPokemon())
+        loadPokemons: ()=>{
+            dispatch(loadPokemons())
         },
     }
 }

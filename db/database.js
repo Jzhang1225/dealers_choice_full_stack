@@ -42,22 +42,25 @@ const Pokemon = database.define('pokemon', {
     },
 });
 
-Pokemon.createPokemon = function (name) {
+Pokemon.createPokemon = function (name, trainerId) {
     return this.create({
         name,
         level: randomNum(),
+        trainerId
     })
 }
+
+Trainer.hasMany(Pokemon)
+Pokemon.belongsTo(Trainer)
 
 const syncAndSeed = async () =>{
     await database.sync({ force:true })
     console.log('DB CONNECTED')
-    await Promise.all(['Pikachu', 'Squirtle', 'Bulbasaur', 'Charmander', 'Eevee'].map(x=>{
-        return Pokemon.createPokemon(x)
-    }))
-    await Promise.all(['Ash', 'Brock', 'Misty'].map(x=>{
+    const [Ash, Brock, Misty] = await Promise.all(['Ash', 'Brock', 'Misty'].map(x=>{
         return Trainer.createTrainer(x)
     }))
+    await Promise.all(['Pikachu', 'Squirtle', 'Bulbasaur'].map(x=> Pokemon.createPokemon(x, Ash.id)));
+    await Promise.all(['Charmander', 'Eevee'].map(x=> Pokemon.createPokemon(x, Misty.id)))
 };
 
 module.exports = {

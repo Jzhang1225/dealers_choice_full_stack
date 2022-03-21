@@ -10,4 +10,15 @@ router.get('/', async(req, res, next) =>{
     }
 })
 
+router.delete('/:id', async(req, res, next) =>{
+    try{
+        const trainer = await Trainer.findByPk(req.params.id);
+        await trainer.destroy();
+        res.send(trainer)
+    }
+    catch(e){
+        next(e)
+    }
+})
+
 module.exports = router
