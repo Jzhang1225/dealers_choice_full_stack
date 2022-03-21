@@ -10,6 +10,16 @@ router.get('/', async(req, res, next) =>{
     }
 })
 
+router.post('/', async(req, res, next) =>{
+    try{
+        const trainer = await Trainer.create({ name: req.body.name, age: req.body.age })
+        res.send(trainer)
+    }
+    catch(e){
+        next(e)
+    }
+})
+
 router.delete('/:id', async(req, res, next) =>{
     try{
         const trainer = await Trainer.findByPk(req.params.id);
