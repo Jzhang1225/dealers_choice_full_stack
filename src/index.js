@@ -7,6 +7,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom'
 import Trainers from './Trainers';
 import Pokemons from './Pokemons';
 import Trainer from './Trainer';
+import UpdateTrainer from './UpdateTrainer';
 
 class _App extends Component {
     componentDidMount(){
@@ -22,6 +23,7 @@ class _App extends Component {
                 <Nav />
                 <Switch>
                     <Route exact path= '/' component= { Trainers }/>
+                    <Route exact path= '/trainers/:id/update' component= { UpdateTrainer }/>
                     <Route exact path= '/trainers/:id' component= { Trainer }/>
                     <Route exact path= '/pokemons' component = { Pokemons } />
                 </Switch>

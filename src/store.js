@@ -6,6 +6,7 @@ const LOAD_TRAINERS = 'LOAD_TRAINERS';
 const LOAD_POKEMON = 'LOAD_POKEMON';
 const DESTROY_TRAINER = 'DESTROY_TRAINER';
 const CREATE_TRAINER = 'CREATE_TRAINER';
+const UPDATE_TRAINER = 'UPDATE_TRAINER';
 const DESTROY_POKEMON = 'DESTROY_POKEMON';
 const CREATE_POKEMON = 'CREATE_POKEMON';
 
@@ -30,6 +31,12 @@ const trainerReducer = ( state = [], action ) =>{
     };
     if (action.type === CREATE_TRAINER){
         return [...state, action.trainer]
+    };
+    if (action.type === UPDATE_TRAINER){
+        return state.map(trainer =>{
+            if (trainer.id === action.trainer.id) trainer = action.trainer
+            return trainer
+        })
     };
     return state
 }
@@ -67,6 +74,17 @@ const createTrainer =(newTrainer, history)=>{
             trainer
         });
         history.push(`/trainers/${trainer.id}`)
+    }
+};
+
+const updateTrainer =(trainerId, newTrainer, history)=>{
+    return async (dispatch) =>{
+        const trainer = (await axios.put(`/api/trainers/${trainerId}`, newTrainer)).data
+        dispatch({
+            type: UPDATE_TRAINER,
+            trainer
+        });
+        history.push('/')
     }
 };
 
@@ -109,6 +127,7 @@ export {
     loadPokemons,
     destroyTrainer,
     createTrainer,
+    updateTrainer,
     destroyPokemon,
     createPokemon,
 }

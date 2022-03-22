@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from 'react-redux';
 import { destroyPokemon } from './store';
 import CreatePokemon from './CreatePokemon';
-import { Route } from 'react-router-dom'
+import { Route, Link } from 'react-router-dom'
 
 const Pokemons = ({ pokemons, destroyPokemon }) => {
     return (
@@ -12,7 +12,8 @@ const Pokemons = ({ pokemons, destroyPokemon }) => {
             {pokemons.map(pokemon =>{
                 return(
                     <div key = {pokemon.id}>
-                        Level {pokemon.level} {pokemon.name}
+                        A level {pokemon.level} <Link to= {`/pokemons/${pokemon.id}`}>{pokemon.name}</Link>
+                        <span> </span>
                         <button onClick={ () => destroyPokemon(pokemon.id) }>Release Pokemon</button>
                     </div>
                 )
