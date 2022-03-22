@@ -31,7 +31,7 @@ class UpdateTrainer extends Component {
                 updateTrainer(this.props.trainer.id, trainer, history)
             }}>
                 <input onChange= {ev => this.setState({ name: ev.target.value })} name = 'name' placeholder="Trainer Name" value = { name }/>
-                <input onChange= {ev => this.setState({ age: ev.target.value })}type = 'number' name = 'age' placeholder="Trainer Age" value = { age }/>
+                <input onChange= {ev => this.setState({ age: ev.target.value })}type = 'number' name = 'age' placeholder="Trainer Age" value = { name }/>
                 <button disabled = { !name || !age }> Update trainer info </button>
             </form>
         )
