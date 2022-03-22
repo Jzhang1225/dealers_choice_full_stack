@@ -9,7 +9,6 @@ const Trainer = ({ trainers, match, pokemons }) => {
         <div>
             <h2>{trainer?.name} has {party.length} pokemon </h2>
             <Link to= {`/trainers/${trainer?.id}/update`}>Update trainer info </Link>
-            <br/>
             {party.map(pokemon =>{
                 return (
                     <div key = {pokemon.id}>
